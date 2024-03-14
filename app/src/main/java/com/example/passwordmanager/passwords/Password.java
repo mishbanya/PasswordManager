@@ -1,6 +1,8 @@
 package com.example.passwordmanager.passwords;
 
-public class Password {
+import java.io.Serializable;
+
+public class Password implements Serializable {
     private String password;
     private String host;
     private String iconURL = "";

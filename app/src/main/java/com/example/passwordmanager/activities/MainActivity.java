@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
                 if (authenticated) {
                     int position = data.indexOf(password);
                     if (position != RecyclerView.NO_POSITION) {
-
+                        Intent intent = new Intent(MainActivity.this, EditActivity.class);
+                        intent.putExtra("password", password);
+                        startActivity(intent);
                     }
                 }
             });

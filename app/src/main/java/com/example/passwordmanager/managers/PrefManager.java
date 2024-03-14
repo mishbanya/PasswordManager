@@ -9,11 +9,12 @@ import com.example.passwordmanager.passwords.Password;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrefManager {
+public class PrefManager implements Serializable {
 
     private static final String PASSWORDS_KEY = "passwords";
     public static final String MASTER_KEY = "master";

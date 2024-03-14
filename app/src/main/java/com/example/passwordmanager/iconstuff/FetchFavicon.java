@@ -28,6 +28,10 @@ public class FetchFavicon extends AsyncTask<Void, Void, String> {
         String icon = "";
         OkHttpClient client = new OkHttpClient();
         String API_URL = "https://besticon-demo.herokuapp.com/allicons.json?url=" + host;
+        if(!URLValidityCheck.isValidURL(API_URL)){
+            Log.e(TAG,"URL is not valid");
+            return icon;
+        }
         Request request = new Request.Builder()
                 .url(API_URL)
                 .get()
