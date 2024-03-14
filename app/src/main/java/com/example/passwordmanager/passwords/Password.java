@@ -4,14 +4,9 @@ import java.io.Serializable;
 
 public class Password implements Serializable {
     private String password;
-    private String host;
+    private final String host;
     private String iconURL = "";
     private String iconBase64 = "";
-
-    Password() {
-        this.password = "1234";
-        this.host = "vk.com";
-    }
 
     public Password(String password, String host) {
         this.password = password;
@@ -24,10 +19,6 @@ public class Password implements Serializable {
 
     public String getPassword() {
         return this.password;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
     }
 
     public String getHost() {

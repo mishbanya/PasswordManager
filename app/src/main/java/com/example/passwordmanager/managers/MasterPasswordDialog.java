@@ -9,8 +9,6 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.passwordmanager.passwords.MasterPassword;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class MasterPasswordDialog {
 
     private Context context;

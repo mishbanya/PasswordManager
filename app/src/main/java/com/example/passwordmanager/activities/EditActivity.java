@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.passwordmanager.R;
 import com.example.passwordmanager.managers.PrefManager;
-import com.example.passwordmanager.passwords.MasterPassword;
 import com.example.passwordmanager.passwords.Password;
 
 public class EditActivity extends AppCompatActivity implements View.OnClickListener {
@@ -66,11 +65,9 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
             builder.setPositiveButton("OK", (dialog, which) -> {
                 String enteredPassword = input.getText().toString();
-                Password newPassword = new Password(enteredPassword,password.getHost());
-                newPassword.setIconURL(password.getIconURL());
-                newPassword.setIconBase64(password.getIconBase64());
+                password.setPassword(enteredPassword);
                 prefManager.removePassword(password.getHost());
-                prefManager.addPassword(newPassword);
+                prefManager.addPassword(password);
                 Toast.makeText(this, "Новый пароль установлен!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 Intent intent = new Intent(EditActivity.this, MainActivity.class);
