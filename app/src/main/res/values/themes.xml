@@ -1,0 +1,7 @@
+<resources>
+    <style name="Base.Theme.PasswordManager" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+    </style>
+
+    <style name="Theme.PasswordManager" parent="Base.Theme.PasswordManager" />
+</resources>
