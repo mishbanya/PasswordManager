@@ -46,9 +46,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Password data = dataList.get(position);
         holder.textViewHost.setText(data.getHost());
         String icon = data.getIconBase64();
-        byte[] decodedString = Base64.decode(icon, Base64.DEFAULT);
-        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        if (icon != null) {
+        if ((icon != null ) && (!icon.isEmpty())){
+            byte[] decodedString = Base64.decode(icon, Base64.DEFAULT);
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             holder.imageIcon.setImageBitmap(decodedBitmap);
         } else {
             holder.imageIcon.setImageResource(R.drawable.error);

@@ -1,4 +1,4 @@
-package com.example.passwordmanager;
+package com.example.passwordmanager.iconstuff;
 import java.net.MalformedURLException;
 import java.net.URL;
 public class URLValidityCheck {

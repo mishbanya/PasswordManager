@@ -1,4 +1,4 @@
-package com.example.passwordmanager;
+package com.example.passwordmanager.iconstuff;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -38,8 +38,13 @@ public class FetchFavicon extends AsyncTask<Void, Void, String> {
                 String jsonData = response.body().string();
                 JsonObject jsonObject = JsonParser.parseString(jsonData).getAsJsonObject();
                 JsonArray itemsArray = jsonObject.getAsJsonArray("icons");
-                icon = itemsArray.get(0).getAsJsonObject().get("url").getAsString();
-                Log.e(TAG, icon);
+                if(!itemsArray.isEmpty()) {
+                    icon = itemsArray.get(0).getAsJsonObject().get("url").getAsString();
+                    Log.e(TAG, icon);
+                }else{
+                    Log.e(TAG, "No such icon");
+                    icon="";
+                }
             }else {
                 Log.e(TAG, "Response is not successful");
                 icon="";

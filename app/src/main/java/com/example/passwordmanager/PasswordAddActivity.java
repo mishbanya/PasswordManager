@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.util.Log;
 import android.util.Base64;
 
+import com.example.passwordmanager.iconstuff.FetchFavicon;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -67,7 +68,10 @@ public class PasswordAddActivity extends AppCompatActivity{
                         }
                     });
                 } else {
-                    Log.e(TAG, "Иконка пустая");
+                    prefManager.addPassword(new Password(password,host));
+                    Log.e(TAG, "Icon WILL BE EMPTY");
+                    Intent intent = new Intent(PasswordAddActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             });
             fetchFavicon.execute();
