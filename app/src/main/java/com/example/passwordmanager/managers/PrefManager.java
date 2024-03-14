@@ -1,4 +1,4 @@
-package com.example.passwordmanager;
+package com.example.passwordmanager.managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -93,5 +93,9 @@ public class PrefManager {
         } else {
             return null;
         }
+    }
+    public void removeMasterPassword(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MASTER_KEY, Context.MODE_PRIVATE);
+        sharedPreferences.edit().remove(MASTER_KEY).apply();
     }
 }

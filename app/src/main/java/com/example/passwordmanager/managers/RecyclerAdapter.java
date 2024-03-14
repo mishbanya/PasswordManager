@@ -1,4 +1,4 @@
-package com.example.passwordmanager;
+package com.example.passwordmanager.managers;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,6 +13,7 @@ import android.util.Base64;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.passwordmanager.R;
 import com.example.passwordmanager.passwords.Password;
 
 import java.util.List;
@@ -78,6 +79,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewHost;
+        public TextView textViewPassword;
         ImageView imageIcon;
         Button buttonEdit;
         Button buttonView;
@@ -86,6 +88,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
             imageIcon = itemView.findViewById(R.id.imageIcon);
             textViewHost = itemView.findViewById(R.id.textViewHost);
+            textViewPassword = itemView.findViewById(R.id.textViewPassword);
             buttonView = itemView.findViewById(R.id.buttonView);
             buttonEdit = itemView.findViewById(R.id.buttonEdit);
 

@@ -12,7 +12,7 @@ import android.util.Log;
 import android.util.Base64;
 
 import com.example.passwordmanager.passwords.Password;
-import com.example.passwordmanager.PrefManager;
+import com.example.passwordmanager.managers.PrefManager;
 import com.example.passwordmanager.R;
 import com.example.passwordmanager.iconstuff.FetchFavicon;
 import com.squareup.picasso.Picasso;

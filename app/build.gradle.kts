@@ -36,6 +36,7 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.3")
     implementation ("com.google.code.gson:gson:2.8.8")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
