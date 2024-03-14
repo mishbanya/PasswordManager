@@ -20,7 +20,7 @@ import com.squareup.picasso.Target;
 
 import java.io.ByteArrayOutputStream;
 
-public class PasswordAddActivity extends AppCompatActivity{
+public class PasswordAddActivity extends AppCompatActivity {
 
     Button buttonAdd;
     Button buttonCancel;
@@ -43,39 +43,41 @@ public class PasswordAddActivity extends AppCompatActivity{
             String password = editTextPassword.getText().toString();
             String host = editTextHost.getText().toString();
             FetchFavicon fetchFavicon = new FetchFavicon(host, icon -> {
-                if (!icon.isEmpty()) {
-                    Password newPassword = new Password(password, host);
-                    Picasso.get().load(icon).into(new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-
-                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                            byte[] byteArray = byteArrayOutputStream.toByteArray();
-                            String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-                            newPassword.setIconURL(icon);
-                            newPassword.setIconBase64(base64Image);
-                            prefManager.addPassword(newPassword);
-                            Intent intent = new Intent(PasswordAddActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        }
-                        @Override
-                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                            Log.e("Bitmap","Загрузка Bitmap завершена с ошибкой");
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                        }
-                    });
-                } else {
-                    prefManager.addPassword(new Password(password,host));
+                if (icon.isEmpty()) {
+                    prefManager.addPassword(new Password(password, host));
                     Log.e(TAG, "Icon WILL BE EMPTY");
                     Intent intent = new Intent(PasswordAddActivity.this, MainActivity.class);
                     startActivity(intent);
+                    return;
                 }
+                Password newPassword = new Password(password, host);
+                Picasso.get().load(icon).into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        byte[] byteArray = byteArrayOutputStream.toByteArray();
+                        String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                        newPassword.setIconURL(icon);
+                        newPassword.setIconBase64(base64Image);
+                        prefManager.addPassword(newPassword);
+                        Intent intent = new Intent(PasswordAddActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                        Log.e("Bitmap", "Загрузка Bitmap завершена с ошибкой");
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+
             });
             fetchFavicon.execute();
         });

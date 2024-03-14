@@ -32,16 +32,6 @@ public class PrefManager implements Serializable {
         savePasswordDetails(passwords);
     }
 
-    public Password findPassword(String host) {
-        List<Password> passwords = getPasswords();
-        for (Password password : passwords) {
-            if (TextUtils.equals(password.getHost(), host)) {
-                return password;
-            }
-        }
-        return null;
-    }
-
     public void removePassword(String host) {
         List<Password> passwords = getPasswords();
         for (Password password : passwords) {
