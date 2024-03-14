@@ -1,4 +1,4 @@
-package com.example.passwordmanager;
+package com.example.passwordmanager.passwords;
 
 public class Password {
     private String password;
@@ -11,7 +11,7 @@ public class Password {
         this.host = "vk.com";
     }
 
-    Password(String password, String host) {
+    public Password(String password, String host) {
         this.password = password;
         this.host = host;
     }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.example.passwordmanager.passwords.MasterPassword;
+import com.example.passwordmanager.passwords.Password;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public class PrefManager {
 
     private static final String PASSWORDS_KEY = "passwords";
+    public static final String MASTER_KEY = "master";
     private Context context;
     private Gson gson;
 
@@ -70,6 +73,25 @@ public class PrefManager {
             return gson.fromJson(passwordsJson, listType);
         } else {
             return new ArrayList<>();
+        }
+    }
+
+    public void saveMasterPassword(MasterPassword password){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MASTER_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(MASTER_KEY, password.getHash());
+        editor.apply();
+    }
+    public MasterPassword getMasterPassword() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(MASTER_KEY, Context.MODE_PRIVATE);
+        String hash = sharedPreferences.getString(MASTER_KEY, "");
+        if (!hash.isEmpty()) {
+            MasterPassword masterPassword = new MasterPassword();
+            masterPassword.setHash(hash);
+            return masterPassword;
+        } else {
+            return null;
         }
     }
 }

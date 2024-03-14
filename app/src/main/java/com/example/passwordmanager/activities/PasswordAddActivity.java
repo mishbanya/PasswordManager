@@ -1,4 +1,4 @@
-package com.example.passwordmanager;
+package com.example.passwordmanager.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.util.Log;
 import android.util.Base64;
 
+import com.example.passwordmanager.passwords.Password;
+import com.example.passwordmanager.PrefManager;
+import com.example.passwordmanager.R;
 import com.example.passwordmanager.iconstuff.FetchFavicon;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;

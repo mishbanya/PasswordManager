@@ -13,6 +13,8 @@ import android.util.Base64;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.passwordmanager.passwords.Password;
+
 import java.util.List;
 
 
