@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">PasswordManager</string>
-    <string name="password">Пароль</string>
+
+    <string name="adder_host">Хост</string>
+    <string name="adder_password">Пароль</string>
+    <string name="adder_add">Добавить</string>
+    <string name="adder_cancel">Отмена</string>
+
+    <string name="item_hidden">Скрыто</string>
+
+    <string name="main_add">Добавить пароль</string>
+
+    <string name="edit_host">Host</string>
+    <string name="edit_password">Password</string>
+    <string name="edit_edit">Изменить пароль</string>
+    <string name="edit_delete">Удалить пароль</string>
+    <string name="edit_cancel">Отмена</string>
 </resources>

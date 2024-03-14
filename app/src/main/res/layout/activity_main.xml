@@ -10,7 +10,7 @@
         android:id="@+id/buttonAddPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Добавить пароль"
+        android:text="@string/main_add"
         android:layout_margin="5dp"
         />
     <androidx.recyclerview.widget.RecyclerView
