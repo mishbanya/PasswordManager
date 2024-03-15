@@ -15,4 +15,5 @@
     <string name="edit_edit">Изменить пароль</string>
     <string name="edit_delete">Удалить пароль</string>
     <string name="edit_cancel">Отмена</string>
+    <string name="edit_loading">Загрузка...</string>
 </resources>

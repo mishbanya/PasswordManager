@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
 import android.util.Base64;
+import android.widget.TextView;
 
 import com.example.passwordmanager.passwords.Password;
 import com.example.passwordmanager.managers.PrefManager;
@@ -25,6 +26,7 @@ public class PasswordAddActivity extends AppCompatActivity {
     Button buttonAdd;
     Button buttonCancel;
     EditText editTextHost;
+    TextView textViewLoading;
     String TAG = "PasswordAddActivity";
     EditText editTextPassword;
     PrefManager prefManager = new PrefManager(this);
@@ -38,15 +40,20 @@ public class PasswordAddActivity extends AppCompatActivity {
         buttonCancel = findViewById(R.id.buttonCancel);
         editTextHost = findViewById(R.id.editTextHost);
         editTextPassword = findViewById(R.id.editTextPassword);
+        textViewLoading = findViewById(R.id.textViewLoading);
 
         buttonAdd.setOnClickListener(v -> {
+            textViewLoading.setAlpha(1);
             String password = editTextPassword.getText().toString();
             String host = editTextHost.getText().toString();
             FetchFavicon fetchFavicon = new FetchFavicon(host, icon -> {
                 if (icon.isEmpty()) {
                     prefManager.addPassword(new Password(password, host));
                     Log.e(TAG, "Icon WILL BE EMPTY");
-                    Intent intent = new Intent(PasswordAddActivity.this, MainActivity.class);
+                    Intent intent = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                        intent = new Intent(PasswordAddActivity.this, MainActivity.class);
+                    }
                     startActivity(intent);
                     return;
                 }
@@ -62,27 +69,31 @@ public class PasswordAddActivity extends AppCompatActivity {
 
                         newPassword.setIconBase64(base64Image);
                         prefManager.addPassword(newPassword);
-                        Intent intent = new Intent(PasswordAddActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        StartMainActivity();
                     }
 
                     @Override
                     public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                        Log.e("Bitmap", "Загрузка Bitmap завершена с ошибкой");
+                        Log.e(TAG, "Bitmap load failed, ICON WILL BE EMPTY");
+                        prefManager.addPassword(newPassword);
                     }
 
                     @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {}
                 });
 
             });
             fetchFavicon.execute();
         });
         buttonCancel.setOnClickListener(v -> {
-            Intent intent = new Intent(PasswordAddActivity.this, MainActivity.class);
-            startActivity(intent);
+            StartMainActivity();
         });
+    }
+    public void StartMainActivity(){
+        Intent intent = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            intent = new Intent(PasswordAddActivity.this, MainActivity.class);
+        }
+        startActivity(intent);
     }
 }
