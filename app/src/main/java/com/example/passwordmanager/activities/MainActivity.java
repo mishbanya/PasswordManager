@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     PrefManager prefManager = new PrefManager(this);
     MasterPasswordDialog masterPasswordDialog;
     Button buttonAdd;
-    //Boolean AUTH = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +49,8 @@ public class MainActivity extends AppCompatActivity {
         Recycler.setLayoutManager(new LinearLayoutManager(this));
 
         recyclerAdapter.setOnViewButtonClickListener(password -> {
-        /*    if(AUTH){
-                int position = data.indexOf(password);
-                if (position != RecyclerView.NO_POSITION) {
-                    RecyclerAdapter.ViewHolder viewHolder = (RecyclerAdapter.ViewHolder) Recycler.findViewHolderForAdapterPosition(position);
-                    if (viewHolder != null) {
-                        viewHolder.textViewPassword.setText(password.getPassword());
-                    }
-                }
-            }else{*/
             masterPasswordDialog.showMasterPasswordDialog(authenticated -> {
                 if (authenticated) {
-                    //AUTH = true;
                     int position = data.indexOf(password);
                     if (position != RecyclerView.NO_POSITION) {
                         RecyclerAdapter.ViewHolder viewHolder = (RecyclerAdapter.ViewHolder) Recycler.findViewHolderForAdapterPosition(position);
@@ -71,20 +60,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-            //  }
         });
         recyclerAdapter.setOnEditButtonClickListener(password -> {
-       /*     if(AUTH){
-                int position = data.indexOf(password);
-                if (position != RecyclerView.NO_POSITION) {
-                    Intent intent = new Intent(MainActivity.this, EditActivity.class);
-                    intent.putExtra("password", password);
-                    startActivity(intent);
-                }
-            }else{*/
             masterPasswordDialog.showMasterPasswordDialog(authenticated -> {
                 if (authenticated) {
-                    //AUTH = true;
                     int position = data.indexOf(password);
                     if (position != RecyclerView.NO_POSITION) {
                         Intent intent = new Intent(MainActivity.this, EditActivity.class);
@@ -93,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-            //}
         });
     }
 }
