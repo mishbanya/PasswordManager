@@ -51,44 +51,49 @@ public class PasswordAddActivity extends AppCompatActivity {
                 return;
             }
             textViewLoading.setAlpha(1);
-            FetchFavicon fetchFavicon = new FetchFavicon(host, icon -> {
-                if (icon.isEmpty()) {
-                    prefManager.addPassword(new Password(password, host));
-                    Log.e(TAG, "Icon WILL BE EMPTY");
-                    Intent intent = null;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                        intent = new Intent(PasswordAddActivity.this, MainActivity.class);
+            try {
+                FetchFavicon fetchFavicon = new FetchFavicon(host, icon -> {
+                    if (icon.isEmpty()) {
+                        prefManager.addPassword(new Password(password, host));
+                        Log.e(TAG, "Icon WILL BE EMPTY");
+                        Intent intent = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                            intent = new Intent(PasswordAddActivity.this, MainActivity.class);
+                        }
+                        startActivity(intent);
+                        return;
                     }
-                    startActivity(intent);
-                    return;
-                }
-                Password newPassword = new Password(password, host);
-                Picasso.get().load(icon).into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    Password newPassword = new Password(password, host);
+                    Picasso.get().load(icon).into(new Target() {
+                        @Override
+                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
-                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                        byte[] byteArray = byteArrayOutputStream.toByteArray();
-                        String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                            byte[] byteArray = byteArrayOutputStream.toByteArray();
+                            String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-                        newPassword.setIconBase64(base64Image);
-                        prefManager.addPassword(newPassword);
-                        StartMainActivity();
-                    }
+                            newPassword.setIconBase64(base64Image);
+                            prefManager.addPassword(newPassword);
+                            StartMainActivity();
+                        }
 
-                    @Override
-                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                        Log.e(TAG, "Bitmap load failed, ICON WILL BE EMPTY");
-                        prefManager.addPassword(newPassword);
-                    }
+                        @Override
+                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                            Log.e(TAG, "Bitmap load failed, ICON WILL BE EMPTY");
+                            prefManager.addPassword(newPassword);
+                        }
 
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {}
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        }
+                    });
                 });
-
-            });
-            fetchFavicon.execute();
+                fetchFavicon.execute();
+            }catch (Exception e){
+                prefManager.addPassword(new Password(password, host));
+                Log.e(TAG,"Error while fetching, loading or converting favicon",e);
+            }
         });
         buttonCancel.setOnClickListener(v -> StartMainActivity());
     }
