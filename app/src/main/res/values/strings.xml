@@ -5,6 +5,7 @@
     <string name="adder_password">Пароль</string>
     <string name="adder_add">Добавить</string>
     <string name="adder_cancel">Отмена</string>
+    <string name="adder_allow">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&amp;*()_-+=&lt;&gt;,.?/:;{}[]|\\</string>
 
     <string name="item_hidden">Скрыто</string>
 
@@ -15,5 +16,5 @@
     <string name="edit_edit">Изменить пароль</string>
     <string name="edit_delete">Удалить пароль</string>
     <string name="edit_cancel">Отмена</string>
-    <string name="edit_loading">Загрузка...</string>
+    <string name="edit_loading">Загрузка…</string>
 </resources>

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.util.Log;
 import android.util.Base64;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.passwordmanager.passwords.Password;
 import com.example.passwordmanager.managers.PrefManager;
@@ -43,9 +44,13 @@ public class PasswordAddActivity extends AppCompatActivity {
         textViewLoading = findViewById(R.id.textViewLoading);
 
         buttonAdd.setOnClickListener(v -> {
-            textViewLoading.setAlpha(1);
             String password = editTextPassword.getText().toString();
             String host = editTextHost.getText().toString();
+            if (password.isEmpty() || host.isEmpty()) {
+                Toast.makeText(PasswordAddActivity.this, "Оба поля должны быть заполнены", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            textViewLoading.setAlpha(1);
             FetchFavicon fetchFavicon = new FetchFavicon(host, icon -> {
                 if (icon.isEmpty()) {
                     prefManager.addPassword(new Password(password, host));
@@ -85,9 +90,7 @@ public class PasswordAddActivity extends AppCompatActivity {
             });
             fetchFavicon.execute();
         });
-        buttonCancel.setOnClickListener(v -> {
-            StartMainActivity();
-        });
+        buttonCancel.setOnClickListener(v -> StartMainActivity());
     }
     public void StartMainActivity(){
         Intent intent = null;
