@@ -1,12 +1,10 @@
 package com.example.passwordmanager.passwords;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 public class Password implements Serializable {
     private String hash;
     private final String host;
-    private String iconURL = "";
     private String iconBase64 = "";
     private final int key = 3;
 
@@ -26,8 +24,6 @@ public class Password implements Serializable {
     public String getHost() {
         return this.host;
     }
-
-    public void setIconURL(String iconURL){this.iconURL  = iconURL;}
     public String getIconBase64(){
         return  this.iconBase64;
     }

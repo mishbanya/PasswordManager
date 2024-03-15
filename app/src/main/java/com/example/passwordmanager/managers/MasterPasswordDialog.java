@@ -11,9 +11,9 @@ import com.example.passwordmanager.passwords.MasterPassword;
 
 public class MasterPasswordDialog {
 
-    private Context context;
+    private final Context context;
     private MasterPassword masterPassword;
-    private PrefManager prefManager;
+    private final PrefManager prefManager;
 
     public MasterPasswordDialog(Context context, MasterPassword masterPassword, PrefManager prefManager) {
         this.context = context;

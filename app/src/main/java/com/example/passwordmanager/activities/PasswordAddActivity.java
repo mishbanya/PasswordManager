@@ -60,7 +60,6 @@ public class PasswordAddActivity extends AppCompatActivity {
                         byte[] byteArray = byteArrayOutputStream.toByteArray();
                         String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-                        newPassword.setIconURL(icon);
                         newPassword.setIconBase64(base64Image);
                         prefManager.addPassword(newPassword);
                         Intent intent = new Intent(PasswordAddActivity.this, MainActivity.class);
