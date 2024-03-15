@@ -42,10 +42,6 @@ public class PrefManager implements Serializable {
             }
         }
     }
-    public void removeAllPasswords() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PASSWORDS_KEY, Context.MODE_PRIVATE);
-        sharedPreferences.edit().remove(PASSWORDS_KEY).apply();
-    }
     public void savePasswordDetails(List<Password> passwords) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PASSWORDS_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -84,6 +80,12 @@ public class PrefManager implements Serializable {
         } else {
             return null;
         }
+    }
+
+    //Для быстрой чистки всего и вся
+    public void removeAllPasswords() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PASSWORDS_KEY, Context.MODE_PRIVATE);
+        sharedPreferences.edit().remove(PASSWORDS_KEY).apply();
     }
     public void removeMasterPassword(){
         SharedPreferences sharedPreferences = context.getSharedPreferences(MASTER_KEY, Context.MODE_PRIVATE);

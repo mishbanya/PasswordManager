@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, PasswordAddActivity.class);
             startActivity(intent);
         });
+        //Если нужно быстренько всё поудалять
         //prefManager.removeAllPasswords();
         //prefManager.removeMasterPassword();
         MasterPassword masterPassword = prefManager.getMasterPassword();
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
         FingerprintAuthentication fingerprintAuthentication = new FingerprintAuthentication(this);
+
+        //Сначала вызовем fingerprintAuthentication.authenticate, а по неудаче - masterPasswordDialog.showMasterPasswordDialog
         recyclerAdapter.setOnViewButtonClickListener(password -> fingerprintAuthentication.authenticate(new FingerprintAuthentication.FingerprintAuthenticationCallback() {
                                                    void showPassword(Password Password, RecyclerView Recycler) {
                                                        int position = data.indexOf(Password);

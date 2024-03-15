@@ -68,6 +68,8 @@ public class MasterPasswordDialog {
             @Override
             public void onShow(DialogInterface dialogInterface) {
                 Button positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+
+                //Не отпустим юзера, пока пароль не будет корректный
                 positiveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

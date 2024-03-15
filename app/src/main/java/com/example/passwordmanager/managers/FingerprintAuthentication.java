@@ -41,6 +41,7 @@ public class FingerprintAuthentication {
 
             @Override
             public void onAuthenticationFailed() {
+                //Попробуем еще раз
                 super.onAuthenticationFailed();
             }
 

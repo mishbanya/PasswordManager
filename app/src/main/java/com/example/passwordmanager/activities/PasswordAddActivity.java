@@ -97,6 +97,7 @@ public class PasswordAddActivity extends AppCompatActivity {
         });
         buttonCancel.setOnClickListener(v -> StartMainActivity());
     }
+    //Дабы в коде было меньше повторений
     public void StartMainActivity(){
         Intent intent = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {

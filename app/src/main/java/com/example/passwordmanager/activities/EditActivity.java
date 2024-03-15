@@ -37,7 +37,10 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(password==null){
             Log.e(TAG, "Password is null");
-            Intent Errintent = new Intent(EditActivity.this, MainActivity.class);
+            Intent Errintent = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                Errintent = new Intent(EditActivity.this, MainActivity.class);
+            }
             startActivity(Errintent);
         }
         textViewHost = findViewById(R.id.textViewHost);
@@ -70,10 +73,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                 prefManager.addPassword(password);
                 Toast.makeText(this, "Новый пароль установлен!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
-                Intent intent = new Intent(EditActivity.this, MainActivity.class);
-                startActivity(intent);
+                StartMainActivity();
             });
-
             builder.setNegativeButton("Отмена", (dialog, which) -> {
                 dialog.dismiss();
             });
@@ -84,11 +85,18 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (v == buttonDelete) {
             prefManager.removePassword(password.getHost());
-            Intent intent = new Intent(EditActivity.this, MainActivity.class);
-            startActivity(intent);
+            StartMainActivity();
         } else if (v == buttonCancel) {
-            Intent intent = new Intent(EditActivity.this, MainActivity.class);
-            startActivity(intent);
+            StartMainActivity();
         }
     }
+    //Дабы в коде было меньше повторений
+    public void StartMainActivity(){
+        Intent intent = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            intent = new Intent(EditActivity.this, MainActivity.class);
+        }
+        startActivity(intent);
+    }
+
 }
