@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, PasswordAddActivity.class);
             startActivity(intent);
         });
-
+        //prefManager.removeAllPasswords();
+        //prefManager.removeMasterPassword();
         MasterPassword masterPassword = prefManager.getMasterPassword();
         masterPasswordDialog = new MasterPasswordDialog(this, masterPassword, prefManager);
         if (masterPassword == null) {
