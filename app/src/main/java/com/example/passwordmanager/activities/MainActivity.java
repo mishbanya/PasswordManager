@@ -1,13 +1,18 @@
 package com.example.passwordmanager.activities;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.passwordmanager.managers.FingerprintAuthentication;
 import com.example.passwordmanager.managers.MasterPasswordDialog;
 import com.example.passwordmanager.passwords.MasterPassword;
 import com.example.passwordmanager.passwords.Password;
@@ -18,6 +23,7 @@ import com.example.passwordmanager.managers.RecyclerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiresApi(api = Build.VERSION_CODES.P)
 public class MainActivity extends AppCompatActivity {
 
     private List<Password> data = new ArrayList<>();
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     PrefManager prefManager = new PrefManager(this);
     MasterPasswordDialog masterPasswordDialog;
     Button buttonAdd;
+    String TAG = "Main";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,35 +50,74 @@ public class MainActivity extends AppCompatActivity {
         }
 
         data = prefManager.getPasswords();
-        RecyclerView Recycler = findViewById(R.id.recycler);
+        RecyclerView recycler = findViewById(R.id.recycler);
         recyclerAdapter = new RecyclerAdapter(this, data);
-        Recycler.setAdapter(recyclerAdapter);
-        Recycler.setLayoutManager(new LinearLayoutManager(this));
+        recycler.setAdapter(recyclerAdapter);
+        recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerAdapter.setOnViewButtonClickListener(password -> {
-            masterPasswordDialog.showMasterPasswordDialog(authenticated -> {
-                if (authenticated) {
-                    int position = data.indexOf(password);
-                    if (position != RecyclerView.NO_POSITION) {
-                        RecyclerAdapter.ViewHolder viewHolder = (RecyclerAdapter.ViewHolder) Recycler.findViewHolderForAdapterPosition(position);
-                        if (viewHolder != null) {
-                            viewHolder.textViewPassword.setText(password.getPassword());
-                        }
-                    }
-                }
-            });
-        });
-        recyclerAdapter.setOnEditButtonClickListener(password -> {
-            masterPasswordDialog.showMasterPasswordDialog(authenticated -> {
-                if (authenticated) {
-                    int position = data.indexOf(password);
-                    if (position != RecyclerView.NO_POSITION) {
-                        Intent intent = new Intent(MainActivity.this, EditActivity.class);
-                        intent.putExtra("password", password);
-                        startActivity(intent);
-                    }
-                }
-            });
-        });
+        FingerprintAuthentication fingerprintAuthentication = new FingerprintAuthentication(this);
+        recyclerAdapter.setOnViewButtonClickListener(password -> fingerprintAuthentication.authenticate(new FingerprintAuthentication.FingerprintAuthenticationCallback() {
+                                                   void showPassword(Password Password, RecyclerView Recycler) {
+                                                       int position = data.indexOf(Password);
+                                                       if (position != RecyclerView.NO_POSITION) {
+                                                           RecyclerAdapter.ViewHolder viewHolder = (RecyclerAdapter.ViewHolder) Recycler.findViewHolderForAdapterPosition(position);
+                                                           if (viewHolder != null) {
+                                                               viewHolder.textViewPassword.setText(password.getPassword());
+                                                           }
+                                                       }
+                                                   }
+
+                                                   @Override
+                                                   public void onAuthenticationSuccess() {
+                                                       showPassword(password, recycler);
+                                                   }
+
+                                                   @Override
+                                                   public void onAuthenticationError(int errorCode, CharSequence errString) {
+                                                       Log.e(TAG, String.valueOf(errorCode) + errString);
+                                                       Toast.makeText(MainActivity.this, "Ошибка аутентификации", Toast.LENGTH_SHORT).show();
+                                                   }
+
+                                                   @Override
+                                                   public void onAuthenticationCanceled() {
+                                                       masterPasswordDialog.showMasterPasswordDialog(authenticated -> {
+                                                           if (authenticated) {
+                                                               showPassword(password, recycler);
+                                                           }
+                                                       });
+                                                   }
+                                               }
+        ));
+        recyclerAdapter.setOnEditButtonClickListener(password -> fingerprintAuthentication.authenticate(new FingerprintAuthentication.FingerprintAuthenticationCallback() {
+                                                   void startEditActivity(Password Password) {
+                                                       int position = data.indexOf(Password);
+                                                       if (position != RecyclerView.NO_POSITION) {
+                                                           Intent intent = new Intent(MainActivity.this, EditActivity.class);
+                                                           intent.putExtra("password", Password);
+                                                           startActivity(intent);
+                                                       }
+                                                   }
+
+                                                   @Override
+                                                   public void onAuthenticationSuccess() {
+                                                       startEditActivity(password);
+                                                   }
+
+                                                   @Override
+                                                   public void onAuthenticationError(int errorCode, CharSequence errString) {
+                                                       Log.e(TAG, String.valueOf(errorCode) + errString);
+                                                       Toast.makeText(MainActivity.this, "Ошибка аутентификации", Toast.LENGTH_SHORT).show();
+                                                   }
+
+                                                   @Override
+                                                   public void onAuthenticationCanceled() {
+                                                       masterPasswordDialog.showMasterPasswordDialog(authenticated -> {
+                                                           if (authenticated) {
+                                                               startEditActivity(password);
+                                                           }
+                                                       });
+                                                   }
+                                               }
+        ));
     }
 }
