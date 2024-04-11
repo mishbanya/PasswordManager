@@ -73,7 +73,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                 prefManager.addPassword(password);
                 Toast.makeText(this, "Новый пароль установлен!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
-                StartMainActivity();
+                finish();
             });
             builder.setNegativeButton("Отмена", (dialog, which) -> {
                 dialog.dismiss();
@@ -85,18 +85,10 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (v == buttonDelete) {
             prefManager.removePassword(password.getHost());
-            StartMainActivity();
+            finish();
         } else if (v == buttonCancel) {
-            StartMainActivity();
+            finish();
         }
-    }
-    //Дабы в коде было меньше повторений
-    public void StartMainActivity(){
-        Intent intent = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            intent = new Intent(EditActivity.this, MainActivity.class);
-        }
-        startActivity(intent);
     }
 
 }

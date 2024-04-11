@@ -75,7 +75,7 @@ public class PasswordAddActivity extends AppCompatActivity {
 
                             newPassword.setIconBase64(base64Image);
                             prefManager.addPassword(newPassword);
-                            StartMainActivity();
+                            finish();
                         }
 
                         @Override
@@ -95,14 +95,6 @@ public class PasswordAddActivity extends AppCompatActivity {
                 Log.e(TAG,"Error while fetching, loading or converting favicon",e);
             }
         });
-        buttonCancel.setOnClickListener(v -> StartMainActivity());
-    }
-    //Дабы в коде было меньше повторений
-    public void StartMainActivity(){
-        Intent intent = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            intent = new Intent(PasswordAddActivity.this, MainActivity.class);
-        }
-        startActivity(intent);
+        buttonCancel.setOnClickListener(v -> finish());
     }
 }
